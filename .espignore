@@ -1,0 +1,4 @@
+esp_sync.py
+boot.py
+config.py.dist
+node_config.py.dist
