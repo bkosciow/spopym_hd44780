@@ -1,18 +1,15 @@
 
-
+TYPE_TITLE = '0'
+TYPE_ARTIST = '1'
+TYPE_LENGTH = '2'
+TYPE_PROGRESS = '3'
+TYPE_VOLUME = '4'
+TYPE_ISPLAYING = '5'
+TYPE_REPEAT = '6'
+TYPE_SHUFFLE = '7'
 
 class Track:
     def __init__(self, title):
-        self.i2k = [
-            'title',
-            'artist',
-            'length',
-            'progress',
-            'volume',
-            'playing',
-            'repeat',
-            'shuffle',
-        ]
         self.title = title
         self.current_data = self.empty_data()
 
@@ -49,7 +46,6 @@ class Track:
         }
         self.title.set_title("")
         self.title.set_artist("")
-        # self.title_display.set(result['title'])
 
         return result
 
@@ -109,19 +105,19 @@ class Track:
         order = message[1]
         text = message[2:]
         # print(type, order, text)
-        if type == '0':
+        if type == TYPE_TITLE:
             self.parse_title(text, order)
-        if type == '1':
+        if type == TYPE_ARTIST:
             self.parse_artist(text, order)
-        if type == '2':
+        if type == TYPE_LENGTH:
             self.parse_length(text)
-        if type == '3':
+        if type == TYPE_PROGRESS:
             self.parse_progress(text)
-        if type == '4':
+        if type == TYPE_VOLUME:
             self.parse_volume(text)
-        if type == '5':
+        if type == TYPE_ISPLAYING:
             self.parse_playing(text)
-        if type == '6':
+        if type == TYPE_REPEAT:
             self.parse_repeat(text)
-        if type == '7':
+        if type == TYPE_SHUFFLE:
             self.parse_shuffle(text)
