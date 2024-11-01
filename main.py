@@ -3,13 +3,15 @@ import time
 from machine import I2C
 from microplate.charlcd_i2c_driver import CharLcdDriver
 from microplate.charlcd_buffered import CharLCD
+from microplate.button_worker import ButtonWorker
+from display_worker import DisplayWorker
+from track_worker import TrackWorker
 import esp32
-from track import Track
 from ble import BLE
 from title import Title
 from node_config import *
 from config import *
-
+import microplate.core as core
 
 display_cfg = {
     'width': 20,
@@ -30,39 +32,14 @@ lcd = CharLCD(20, 4, drv, 0, 0)
 lcd.init()
 
 title_display = Title(display_cfg['title_size'])
-track = Track(title_display)
+track_worker = TrackWorker(title_display, 1000)
 
-ble = BLE(NODE_NAME, track)
+ble = BLE(NODE_NAME, track_worker)
 
-
-def display(display_data):
-    # print(display_data)
-    time_offset = int(display_data['progress_percent'] * (display_cfg['width']) / 100)
-    if time_offset == display_cfg['width']:
-        time_offset -= 1
-
-    volume = round(display_data['volume'] * len(display_cfg['volume_bar']) / 100)
-
-    lcd.write('-' + display_data['remaining_minute'] + ':' + display_data['remaining_second'], 0, 0)
-    lcd.write(display_cfg['play'] if display_data['playing'] else display_cfg['pause'], 0, 1)
-    lcd.write(display_cfg['progress_bar'], 0, 3)
-    lcd.write(display_cfg['marker'], time_offset, 3)
-    lcd.write(
-        display_cfg['marker'] *
-        volume +
-        display_cfg['volume_bar'][0:len(display_cfg['volume_bar']) - volume], 7, 1)
-    lcd.write(title_display.get_tick(), 7, 0)
-    lcd.flush()
+display_worker = DisplayWorker(lcd, track_worker, title_display, display_cfg, 1000)
 
 
-while True:
-    start = time.ticks_ms()
+core.add_worker(display_worker)
+core.add_worker(track_worker)
 
-    track.tick()
-
-    display(track.current_data)
-
-    calculated_tick = TICK - time.ticks_diff(time.ticks_ms(), start)
-    if calculated_tick < 0.0:
-        calculated_tick = 0
-    time.sleep_ms(calculated_tick)
+core.start()

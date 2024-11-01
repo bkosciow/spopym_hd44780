@@ -1,3 +1,4 @@
+from microplate.module import ModuleInterface
 
 TYPE_TITLE = '0'
 TYPE_ARTIST = '1'
@@ -8,8 +9,10 @@ TYPE_ISPLAYING = '5'
 TYPE_REPEAT = '6'
 TYPE_SHUFFLE = '7'
 
-class Track:
-    def __init__(self, title):
+
+class TrackWorker(ModuleInterface):
+    def __init__(self, title, tick):
+        super().__init__(None, tick)
         self.title = title
         self.current_data = self.empty_data()
 
@@ -86,7 +89,7 @@ class Track:
     def parse_shuffle(self, text):
         self.current_data['shuffle'] = text == "True"
 
-    def tick(self):
+    def action(self):
         if not self.current_data['playing']:
             return
 
