@@ -58,7 +58,8 @@ class BLE:
 
     def _send(self, data):
         try:
-            self.ble.gatts_notify(0, self.buttons, data + '\n')
+            print("sending: ", data)
+            self.ble.gatts_notify(0, self.buttons, data)
         except Exception as e:
             print(e)
 

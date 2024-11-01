@@ -39,6 +39,34 @@ ble = BLE(NODE_NAME, track_worker)
 display_worker = DisplayWorker(lcd, track_worker, title_display, display_cfg, 1000)
 
 
+def click_callback(pin):
+    print("pin : ", pin)
+
+
+def previous_callback(pin):
+    ble.send('prev')
+
+
+def play_callback(pin):
+    ble.send('play')
+
+
+def stop_callback(pin):
+    ble.send('stop')
+
+
+def next_callback(pin):
+    ble.send('next')
+
+
+btns = ButtonWorker()
+btns.add_button(23, 200, previous_callback)
+btns.add_button(19, 200, stop_callback)
+btns.add_button(18, 200, play_callback)
+btns.add_button(5, 200, next_callback)
+btns.add_button(17, 200, click_callback)
+
+core.add_worker(btns)
 core.add_worker(display_worker)
 core.add_worker(track_worker)
 
