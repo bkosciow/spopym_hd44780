@@ -15,6 +15,7 @@ class TrackWorker(ModuleInterface):
         super().__init__(None, tick)
         self.title = title
         self.current_data = self.empty_data()
+        self.ble = False
 
     def time_to_display(self, data, filler="0"):
         if data < 0:
@@ -107,7 +108,7 @@ class TrackWorker(ModuleInterface):
         type = message[0]
         order = message[1]
         text = message[2:]
-        # print(type, order, text)
+        print(type, order, text)
         if type == TYPE_TITLE:
             self.parse_title(text, order)
         if type == TYPE_ARTIST:

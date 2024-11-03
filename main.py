@@ -13,6 +13,8 @@ from node_config import *
 from config import *
 import microplate.core as core
 
+power_led = Pin(16, Pin.OUT)
+
 display_cfg = {
     'width': 20,
     'height': 4,
@@ -22,6 +24,8 @@ display_cfg = {
     'progress_bar': '[                  ]',
     'volume_bar': '________',
     'title_size': 13,
+    'ble_on': 'B',
+    'ble_off': '-',
 }
 
 i2c = I2C(0, scl=22, sda=21)
@@ -70,4 +74,5 @@ core.add_worker(btns)
 core.add_worker(display_worker)
 core.add_worker(track_worker)
 
+power_led.on()
 core.start()

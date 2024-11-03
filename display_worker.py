@@ -21,6 +21,7 @@ class DisplayWorker(ModuleInterface):
 
         self.lcd.write('-' + self.track_worker.current_data['remaining_minute'] + ':' + self.track_worker.current_data['remaining_second'], 0, 0)
         self.lcd.write(self.display_cfg['play'] if self.track_worker.current_data['playing'] else self.display_cfg['pause'], 0, 1)
+        self.lcd.write(self.display_cfg['ble_on'] if self.track_worker.ble else self.display_cfg['ble_off'], 5, 1)
         self.lcd.write(self.display_cfg['progress_bar'], 0, 3)
         self.lcd.write(self.display_cfg['marker'], time_offset, 3)
         self.lcd.write(

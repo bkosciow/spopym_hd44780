@@ -20,10 +20,12 @@ class BLE:
     def connected(self):
         self.led(1)
         self._connected = True
+        self.track.ble = True
 
     def disconnected(self):
         self.led(0)
         self._connected = False
+        self.track.ble = False
 
     def ble_irq(self, event, data):
         if event == 1:
