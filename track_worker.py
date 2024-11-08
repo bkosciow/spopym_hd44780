@@ -17,6 +17,9 @@ class TrackWorker(ModuleInterface):
         self.current_data = self.empty_data()
         self.ble = False
 
+    def reset(self):
+        self.current_data = self.empty_data()
+
     def time_to_display(self, data, filler="0"):
         if data < 0:
             data = filler * 2
