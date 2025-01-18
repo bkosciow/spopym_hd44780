@@ -26,6 +26,10 @@ display_cfg = {
     'title_size': 13,
     'ble_on': 'B',
     'ble_off': '-',
+    'shuffle_on': 'S',
+    'shuffle_off': ' ',
+    'repeat_on': 'R',
+    'repeat_off': ' ',
 }
 
 i2c = I2C(0, scl=22, sda=21)
@@ -76,3 +80,4 @@ core.add_worker(track_worker)
 
 power_led.on()
 core.start()
+

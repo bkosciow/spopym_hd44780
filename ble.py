@@ -28,14 +28,13 @@ class BLE:
         self.track.ble = False
 
     def ble_irq(self, event, data):
+        print(event, data)
         if event == 1:
-            '''Central disconnected'''
             self.connected()
 
         elif event == 2:
-            '''Central disconnected'''
-            self.advertiser()
             self.disconnected()
+            self.advertiser()
 
         elif event == 3:
             '''New message received'''
@@ -77,4 +76,3 @@ class BLE:
     def send(self, data):
         if self._connected:
             self._send(data)
-

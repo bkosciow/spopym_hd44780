@@ -31,5 +31,7 @@ class DisplayWorker(ModuleInterface):
             self.display_cfg['marker'] *
             volume +
             self.display_cfg['volume_bar'][0:len(self.display_cfg['volume_bar']) - volume], 7, 1)
+        self.lcd.write(self.display_cfg['shuffle_on'] if self.track_worker.current_data['shuffle'] else self.display_cfg['shuffle_off'], 3, 1)
+        self.lcd.write(self.display_cfg['repeat_on'] if self.track_worker.current_data['repeat'] else self.display_cfg['repeat_off'], 4, 1)
         self.lcd.write(self.title_display.get_tick(), 7, 0)
         self.lcd.flush()

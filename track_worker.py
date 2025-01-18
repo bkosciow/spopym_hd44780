@@ -62,14 +62,11 @@ class TrackWorker(ModuleInterface):
         else:
             self.title.append_title(text)
 
-        print(text)
-
     def parse_artist(self, text, order):
         if order == '0':
             self.title.set_artist(text)
         else:
             self.title.append_artist(text)
-        print(text)
 
     def parse_length(self, text):
         total = round(float(text))
@@ -88,7 +85,7 @@ class TrackWorker(ModuleInterface):
         self.current_data['playing'] = text == "True"
 
     def parse_repeat(self, text):
-        self.current_data['repeat'] = text != "off"
+        self.current_data['repeat'] = text == "True"
 
     def parse_shuffle(self, text):
         self.current_data['shuffle'] = text == "True"
