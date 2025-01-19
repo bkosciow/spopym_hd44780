@@ -15,7 +15,6 @@ class DisplayWorker(ModuleInterface):
         if not self.track_worker.ble:
             self.track_worker.reset()
 
-        # print(display_data)
         time_offset = int(self.track_worker.current_data['progress_percent'] * (self.display_cfg['width']) / 100)
         if time_offset == self.display_cfg['width']:
             time_offset -= 1
